@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.instagramcomposeclone.R
 import com.example.instagramcomposeclone.ui.theme.instagramBlue
-import com.example.instagramcomposeclone.ui.theme.instagramGray
+import com.example.instagramcomposeclone.ui.theme.instagramDarkGray
 import com.example.instagramcomposeclone.ui.theme.instagramRed
 
 @Composable
@@ -35,7 +36,7 @@ fun TopProfileNavigation(username: String = "peter_b_parker",
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .background(Color.Black)) {
+        .background(colorScheme.background)) {
         TopNavigationBar(username = username, notificationNumber = notificationNumber)
         ProfileHeader(imageResource = imageResource, publications = publications, followers = followers, following = following)
         ProfileInfo(name = name, description = description)
@@ -48,7 +49,7 @@ fun TopProfileNavigation(username: String = "peter_b_parker",
 fun TopNavigationBar(username: String, notificationNumber: Int) {
     Row(
         modifier = Modifier
-            .background(Color.Black)
+            .background(colorScheme.background)
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -62,14 +63,14 @@ fun TopNavigationBar(username: String, notificationNumber: Int) {
                 modifier = Modifier.size(22.dp),
                 painter = painterResource(id = R.drawable.lock),
                 contentDescription = "locked profile",
-                tint = Color.White
+                tint = colorScheme.onBackground
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = username,
                 fontSize = 21.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = colorScheme.onBackground
             )
 
             Spacer(modifier = Modifier.width(4.dp))
@@ -96,7 +97,7 @@ fun TopNavigationBar(username: String, notificationNumber: Int) {
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = R.drawable.threads),
                 contentDescription = "Threads",
-                tint = Color.White
+                tint = colorScheme.onBackground
             )
         }
         Spacer(modifier = Modifier.width(24.dp))
@@ -110,7 +111,7 @@ fun TopNavigationBar(username: String, notificationNumber: Int) {
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = R.drawable.plus_small_border),
                 contentDescription = "New post",
-                tint = Color.White
+                tint = colorScheme.onBackground
             )
         }
         Spacer(modifier = Modifier.width(24.dp))
@@ -124,7 +125,7 @@ fun TopNavigationBar(username: String, notificationNumber: Int) {
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = R.drawable.menu_burger),
                 contentDescription = "Menu",
-                tint = Color.White
+                tint = colorScheme.onBackground
             )
         }
     }
@@ -135,7 +136,7 @@ fun ProfileHeader(imageResource: Int, publications: Int, followers: Int, followi
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Black)
+            .background(colorScheme.background)
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -166,20 +167,20 @@ fun ProfileHeader(imageResource: Int, publications: Int, followers: Int, followi
         ) {
             Column(modifier = Modifier.clickable {  },
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = publications.toString(), color = Color.White, fontWeight = FontWeight.Bold)
-                Text(text = "Publications", color = Color.White)
+                Text(text = publications.toString(), color = colorScheme.onBackground, fontWeight = FontWeight.Bold)
+                Text(text = "Publications", color = colorScheme.onBackground)
             }
 
             Column(modifier = Modifier.clickable {  },
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = followers.toString(), color = Color.White, fontWeight = FontWeight.Bold)
-                Text(text = "Followers", color = Color.White)
+                Text(text = followers.toString(), color = colorScheme.onBackground, fontWeight = FontWeight.Bold)
+                Text(text = "Followers", color = colorScheme.onBackground)
             }
 
             Column(modifier = Modifier.clickable {  },
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = following.toString(), color = Color.White, fontWeight = FontWeight.Bold)
-                Text(text = "Followings", color = Color.White)
+                Text(text = following.toString(), color = colorScheme.onBackground, fontWeight = FontWeight.Bold)
+                Text(text = "Followings", color = colorScheme.onBackground)
             }
         }
     }
@@ -190,11 +191,11 @@ fun ProfileInfo(name: String, description: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Black)
+            .background(colorScheme.background)
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
     ) {
-        Text(text = name, color = Color.White, fontWeight = FontWeight.Bold)
-        Text(text = description, color = Color.White)
+        Text(text = name, color = colorScheme.onBackground, fontWeight = FontWeight.Bold)
+        Text(text = description, color = colorScheme.onBackground)
     }
 }
 
@@ -203,7 +204,7 @@ fun ProfileActions() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Black)
+            .background(colorScheme.background)
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -213,10 +214,10 @@ fun ProfileActions() {
                 .weight(1f)
                 .padding(0.dp),
             onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = instagramGray),
+            colors = ButtonDefaults.buttonColors(containerColor = colorScheme.secondary),
             shape = RoundedCornerShape(10)
         ) {
-            Text(text = "Modify profile", fontSize = 13.sp, color = Color.White)
+            Text(text = "Modify profile", fontSize = 13.sp, color = colorScheme.onBackground)
         }
         Spacer(modifier = Modifier.width(5.dp))
         Button(
@@ -225,17 +226,17 @@ fun ProfileActions() {
                 .weight(1f)
                 .padding(0.dp),
             onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = instagramGray),
+            colors = ButtonDefaults.buttonColors(containerColor = colorScheme.secondary),
             shape = RoundedCornerShape(10)
         ) {
-            Text(text = "Share profile", fontSize = 13.sp, color = Color.White)
+            Text(text = "Share profile", fontSize = 13.sp, color = colorScheme.onBackground)
         }
 
         Spacer(modifier = Modifier.width(5.dp))
         Button(
             modifier = Modifier.size(32.dp),
             onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = instagramGray),
+            colors = ButtonDefaults.buttonColors(containerColor = colorScheme.secondary),
             shape = RoundedCornerShape(20),
             contentPadding = PaddingValues(0.dp)
         ) {
@@ -243,7 +244,7 @@ fun ProfileActions() {
                 modifier = Modifier.size(14.dp),
                 painter = painterResource(id = R.drawable.user_add),
                 contentDescription = "Add user",
-                tint = Color.White
+                tint = colorScheme.onBackground
             )
         }
     }
@@ -253,7 +254,7 @@ fun ProfileActions() {
 fun HighlightedStories() {
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(Color.Black)
+        .background(colorScheme.background)
         .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         ) {
 
@@ -263,13 +264,14 @@ fun HighlightedStories() {
             horizontalAlignment = Alignment.CenterHorizontally) {
             Image(modifier = Modifier
                 .size(64.dp)
-                .border(1.dp, instagramGray, CircleShape)
+                .border(2.dp, instagramDarkGray, CircleShape)
                 .padding(4.dp)
                 .clip(CircleShape),
                 painter = painterResource(id = R.drawable.bugle_photo),
                 contentDescription = "Photography highlights"
             )
-            Text(text = "Photography", color = Color.White, fontSize = 11.sp)
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(text = "Photography", color = colorScheme.onBackground, fontSize = 11.sp)
         }
 
         Column(modifier = Modifier
@@ -278,27 +280,29 @@ fun HighlightedStories() {
             horizontalAlignment = Alignment.CenterHorizontally) {
             Image(modifier = Modifier
                 .size(64.dp)
-                .border(1.dp, instagramGray, CircleShape)
+                .border(2.dp, instagramDarkGray, CircleShape)
                 .padding(4.dp)
                 .clip(CircleShape),
                 painter = painterResource(id = R.drawable.family_photo),
                 contentDescription = "Bugle highlights"
             )
-            Text(text = "Family", color = Color.White, fontSize = 11.sp)
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(text = "Family", color = colorScheme.onBackground, fontSize = 11.sp)
         }
 
         Column(modifier = Modifier.clickable {  },
             horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(modifier = Modifier
                 .size(64.dp)
-                .border(1.dp, Color.White, CircleShape)
+                .border(1.dp, colorScheme.onBackground, CircleShape)
                 .padding(20.dp),
-                tint = Color.White,
+                tint = colorScheme.onBackground,
                 painter = painterResource(id = R.drawable.plus),
                 contentDescription = "New highlight",
 
             )
-            Text(text = "New", color = Color.White, fontSize = 11.sp)
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(text = "New", color = colorScheme.onBackground, fontSize = 11.sp)
         }
 
         }

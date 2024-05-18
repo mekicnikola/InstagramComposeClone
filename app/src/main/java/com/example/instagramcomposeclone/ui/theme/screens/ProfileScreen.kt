@@ -30,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.example.instagramcomposeclone.R
 import com.example.instagramcomposeclone.ui.theme.components.TopProfileNavigation
 import com.example.instagramcomposeclone.ui.theme.instagramBlue
+import androidx.compose.material3.MaterialTheme.colorScheme
 
 @Composable
 fun ProfileScreen(username:String, modifier: Modifier = Modifier) {
@@ -62,12 +62,12 @@ fun ProfileScreen(username:String, modifier: Modifier = Modifier) {
             modifier = modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .background(Color.Black)
+                .background(colorScheme.background)
         ) {
             CustomTabRow(
                 selectedTabIndex = selectedTab,
                 onTabSelected = { selectedTab = it },
-                modifier = Modifier.background(Color.Black)
+                modifier = Modifier.background(colorScheme.onBackground)
             )
             AnimatedContent(targetState = selectedTab,
                 transitionSpec =  {
@@ -106,25 +106,25 @@ fun CustomTabRow(selectedTabIndex: Int, onTabSelected: (Int) -> Unit, modifier: 
                 Modifier
                     .tabIndicatorOffset(tabPositions[selectedTabIndex])
                     .height(2.dp)
-                    .background(Color.White)
+                    .background(colorScheme.onBackground)
             )
         },
         divider = {}
     ) {
-        Tab( modifier = Modifier.background(Color.Black),
+        Tab( modifier = Modifier.background(colorScheme.background),
             selected = selectedTabIndex == 0,
             onClick = { onTabSelected(0) },
-            icon = { Icon(painter = painterResource(id = R.drawable.grid), contentDescription = null, tint = Color.White) }
+            icon = { Icon(painter = painterResource(id = R.drawable.grid), contentDescription = null, tint = colorScheme.onBackground) }
         )
-        Tab( modifier = Modifier.background(Color.Black),
+        Tab( modifier = Modifier.background(colorScheme.background),
             selected = selectedTabIndex == 1,
             onClick = { onTabSelected(1) },
-            icon = { Icon(painter = painterResource(id = R.drawable.play), contentDescription = null, tint = Color.White) }
+            icon = { Icon(painter = painterResource(id = R.drawable.play), contentDescription = null, tint = colorScheme.onBackground) }
         )
-        Tab( modifier = Modifier.background(Color.Black),
+        Tab( modifier = Modifier.background(colorScheme.background),
             selected = selectedTabIndex == 2,
             onClick = { onTabSelected(2) },
-            icon = { Icon(painter = painterResource(id = R.drawable.picture), contentDescription = null, tint = Color.White) }
+            icon = { Icon(painter = painterResource(id = R.drawable.picture), contentDescription = null, tint = colorScheme.onBackground) }
         )
     }
 }
@@ -160,7 +160,7 @@ fun ReelsGrid() {
     ) {
         Text(
             text = "Share the moment with the world",
-            color = Color.White,
+            color = colorScheme.onBackground,
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp
         )
