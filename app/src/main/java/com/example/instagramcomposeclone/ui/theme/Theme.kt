@@ -14,7 +14,7 @@ import androidx.core.view.WindowCompat
 private val DarkColorScheme = darkColorScheme(
     primary = Color.Black,
     secondary = instagramDarkGray,
-    tertiary = Color.White,
+    tertiary = instagramLightGray,
 
     background = Color.Black,
     surface = Color.Black,
@@ -28,7 +28,7 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = Color.White,
     secondary = instagramLightGray,
-    tertiary = Color.Black,
+    tertiary = instagramDarkGray,
 
     background = Color.White,
     surface = Color.White,

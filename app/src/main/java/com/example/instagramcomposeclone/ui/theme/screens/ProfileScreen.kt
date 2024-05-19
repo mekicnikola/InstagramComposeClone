@@ -40,9 +40,10 @@ import com.example.instagramcomposeclone.R
 import com.example.instagramcomposeclone.ui.theme.components.TopProfileNavigation
 import com.example.instagramcomposeclone.ui.theme.instagramBlue
 import androidx.compose.material3.MaterialTheme.colorScheme
+import com.example.instagramcomposeclone.model.User
 
 @Composable
-fun ProfileScreen(username:String, modifier: Modifier = Modifier) {
+fun ProfileScreen(user: User, modifier: Modifier = Modifier) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val imageResourceList = listOf(
     R.drawable.nature_image,
@@ -56,7 +57,7 @@ fun ProfileScreen(username:String, modifier: Modifier = Modifier) {
     R.drawable.spiderman_bridge
     )
     Scaffold(
-        topBar = { TopProfileNavigation(username = username) }
+        topBar = { TopProfileNavigation(username = user.name) }
     ) { innerPadding ->
         Column(
             modifier = modifier

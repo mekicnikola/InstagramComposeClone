@@ -94,13 +94,13 @@ fun TopNavigationBar(username: String, notificationNumber: Int) {
             contentPadding = PaddingValues(0.dp),
         ) {
             Icon(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(20.dp),
                 painter = painterResource(id = R.drawable.threads),
                 contentDescription = "Threads",
                 tint = colorScheme.onBackground
             )
         }
-        Spacer(modifier = Modifier.width(24.dp))
+        Spacer(modifier = Modifier.width(12.dp))
         Button(
             modifier = Modifier.size(24.dp),
             onClick = { /*TODO*/ },
@@ -114,7 +114,7 @@ fun TopNavigationBar(username: String, notificationNumber: Int) {
                 tint = colorScheme.onBackground
             )
         }
-        Spacer(modifier = Modifier.width(24.dp))
+        Spacer(modifier = Modifier.width(12.dp))
         Button(
             modifier = Modifier.size(24.dp),
             onClick = { /*TODO*/ },
@@ -146,7 +146,6 @@ fun ProfileHeader(imageResource: Int, publications: Int, followers: Int, followi
                 modifier = Modifier
                     .size(80.dp)
                     .clip(CircleShape),
-//                painter = painterResource(id = R.drawable.profile_photo),
                 painter = painterResource(id = imageResource),
                 contentDescription = "profile photo"
             )

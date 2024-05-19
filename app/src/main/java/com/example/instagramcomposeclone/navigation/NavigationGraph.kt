@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.instagramcomposeclone.model.User
 import com.example.instagramcomposeclone.ui.theme.screens.ExploreScreen
 import com.example.instagramcomposeclone.ui.theme.screens.HomeScreen
 import com.example.instagramcomposeclone.ui.theme.screens.ProfileScreen
@@ -12,7 +13,7 @@ import com.example.instagramcomposeclone.ui.theme.screens.ReelsScreen
 import com.example.instagramcomposeclone.ui.theme.screens.ShoppingScreen
 
 @Composable
-fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier) {
+fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier, user: User) {
     NavHost(navController, startDestination = BottomNavItem.Home.route, modifier = modifier) {
         composable(BottomNavItem.Home.route) {
             HomeScreen()
@@ -27,7 +28,7 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
             ShoppingScreen()
         }
         composable(BottomNavItem.Profile.route) {
-            ProfileScreen(username = "peter_b_parker")
+            ProfileScreen(user)
         }
     }
 }
