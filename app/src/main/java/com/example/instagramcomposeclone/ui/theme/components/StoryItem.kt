@@ -3,6 +3,7 @@ package com.example.instagramcomposeclone.ui.theme.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -21,6 +22,7 @@ import com.example.instagramcomposeclone.R
 import com.example.instagramcomposeclone.ui.theme.instagramBlue
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.example.instagramcomposeclone.ui.theme.instagramGradient
 
@@ -38,11 +40,10 @@ fun StoryItem(
     ) {
         Box(
             contentAlignment = Alignment.BottomEnd,
-            modifier = modifier.size(60.dp),
+            modifier = modifier.size(60.dp)
+                .clickable {  }
         ) {
             Image(
-                painter = imagePainter,
-                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape)
@@ -54,6 +55,8 @@ fun StoryItem(
                         ) else instagramGradient,
                         shape = CircleShape
                     ),
+                painter = imagePainter,
+                contentScale = ContentScale.Crop,
                 contentDescription = "$userName's Story"
             )
             if (isYourStory) {
@@ -70,9 +73,12 @@ fun StoryItem(
         }
         Spacer(modifier = Modifier.height(4.dp))
         Text(
+            modifier = Modifier.width(60.dp),
             text = userName,
             fontSize = 11.sp,
-            color = colorScheme.onBackground
+            color = colorScheme.onBackground,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

@@ -87,47 +87,30 @@ fun TopNavigationBar(username: String, notificationNumber: Int) {
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            modifier = Modifier.size(24.dp),
-            onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-            contentPadding = PaddingValues(0.dp),
-        ) {
+
             Icon(
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(20.dp)
+                    .clickable {  },
                 painter = painterResource(id = R.drawable.threads),
                 contentDescription = "Threads",
                 tint = colorScheme.onBackground
             )
-        }
         Spacer(modifier = Modifier.width(12.dp))
-        Button(
-            modifier = Modifier.size(24.dp),
-            onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-            contentPadding = PaddingValues(0.dp),
-        ) {
             Icon(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(24.dp)
+                    .clickable {  },
                 painter = painterResource(id = R.drawable.plus_small_border),
                 contentDescription = "New post",
                 tint = colorScheme.onBackground
             )
-        }
         Spacer(modifier = Modifier.width(12.dp))
-        Button(
-            modifier = Modifier.size(24.dp),
-            onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-            contentPadding = PaddingValues(0.dp)
-        ) {
             Icon(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(24.dp)
+                    .clickable {  },
                 painter = painterResource(id = R.drawable.menu_burger),
                 contentDescription = "Menu",
                 tint = colorScheme.onBackground
             )
-        }
     }
 }
 

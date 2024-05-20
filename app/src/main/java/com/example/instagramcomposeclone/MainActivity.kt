@@ -18,14 +18,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val user = User(username = "peter_b_parker",
-                profileImageResource = R.drawable.profile_photo,
-            name = "Peter Parker",
-            description = "Photographer | Daily Bugle",
-            publications = 153,
-            followers = 209,
-            following = 109,
-            notificationNumber = 9,
+            val user = User(
+                username = "peter_b_parker", profileImageResource = R.drawable.profile_photo,
+                name = "Peter Parker",
+                description = "Photographer | Daily Bugle",
+                publications = 153,
+                followers = 209,
+                following = 109,
+                notificationNumber = 9,
             )
             InstagramComposeCloneTheme {
                 val navController = rememberNavController()

@@ -8,6 +8,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -57,7 +58,7 @@ fun ProfileScreen(user: User, modifier: Modifier = Modifier) {
     R.drawable.spiderman_bridge
     )
     Scaffold(
-        topBar = { TopProfileNavigation(username = user.name) }
+        topBar = { TopProfileNavigation(username = user.username) }
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -145,7 +146,8 @@ fun PostsGrid(imageResourceList: List<Int>) {
                 contentDescription = null,
                 modifier = Modifier
                     .padding(1.dp)
-                    .aspectRatio(1f),
+                    .aspectRatio(1f)
+                    .clickable {  },
                 contentScale = ContentScale.Crop)
         }
     }
@@ -192,7 +194,8 @@ fun TaggedGrid() {
                 contentDescription = null,
                 modifier = Modifier
                     .padding(1.dp)
-                    .aspectRatio(1f),
+                    .aspectRatio(1f)
+                    .clickable {  },
                 contentScale = ContentScale.Crop)
         }
     }
