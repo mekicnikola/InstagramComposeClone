@@ -1,1 +1,1 @@
-![ss](https://github.com/mekicnikola/InstagramComposeClone/assets/102312978/59d39aed-e528-4e04-bcdc-844146f25f93)
+![collage](https://github.com/mekicnikola/InstagramComposeClone/assets/102312978/f1eeeb52-b605-4aba-910b-feae269f2df1)
