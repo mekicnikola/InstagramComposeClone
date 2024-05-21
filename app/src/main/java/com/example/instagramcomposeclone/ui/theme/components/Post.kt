@@ -31,10 +31,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import coil.compose.rememberAsyncImagePainter
 import com.example.instagramcomposeclone.R
 import com.example.instagramcomposeclone.model.Post
 
 val postPlaceholder: Post = Post(
+    id = 1,
     username = "norman_osborn",
     userImage = R.drawable.norman_osborn,
     postImage = R.drawable.norman_osborn_experiment,
@@ -54,6 +56,7 @@ fun Post(post: Post = postPlaceholder) {
         .background(MaterialTheme.colorScheme.background)) {
 
         PostHeader(post.username, post.userImage)
+
 
         Image(
             contentScale = ContentScale.Crop,
@@ -84,10 +87,11 @@ fun PostHeader(username: String, imageResource: Int) {
         .fillMaxWidth()
         .padding(top = 5.dp, bottom = 5.dp, start = 10.dp, end = 10.dp),
         verticalAlignment = Alignment.CenterVertically) {
+        val userImagePainter = rememberAsyncImagePainter(model = imageResource)
         Image(modifier = Modifier
             .size(30.dp)
             .clip(CircleShape),
-            painter = painterResource(id = imageResource),
+            painter = userImagePainter,
             contentDescription = null,
             contentScale = ContentScale.Crop)
         Spacer(modifier = Modifier.width(5.dp))
@@ -116,23 +120,23 @@ fun PostOptions() {
         verticalAlignment = Alignment.CenterVertically) {
 
         Icon(modifier = Modifier
-            .size(24.dp)
+            .size(28.dp)
             .clickable {  },
             painter = painterResource(id = R.drawable.heart),
             contentDescription = "Options",
             tint = MaterialTheme.colorScheme.onBackground
         )
-        Spacer(modifier = Modifier.width(5.dp))
+        Spacer(modifier = Modifier.width(10.dp))
         Icon(modifier = Modifier
-            .size(24.dp)
+            .size(28.dp)
             .clickable {  },
             painter = painterResource(id = R.drawable.comment),
             contentDescription = "Options",
             tint = MaterialTheme.colorScheme.onBackground
         )
-        Spacer(modifier = Modifier.width(5.dp))
+        Spacer(modifier = Modifier.width(10.dp))
         Icon(modifier = Modifier
-            .size(24.dp)
+            .size(28.dp)
             .clickable {  },
             painter = painterResource(id = R.drawable.paper_plane),
             contentDescription = "Options",
@@ -140,7 +144,7 @@ fun PostOptions() {
         )
         Spacer(modifier = Modifier.weight(1f))
         Icon(modifier = Modifier
-            .size(24.dp)
+            .size(28.dp)
             .clickable {  },
             painter = painterResource(id = R.drawable.bookmark),
             contentDescription = "Options",

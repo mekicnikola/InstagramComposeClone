@@ -149,20 +149,35 @@ fun ProfileHeader(imageResource: Int, publications: Int, followers: Int, followi
         ) {
             Column(modifier = Modifier.clickable {  },
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = publications.toString(), color = colorScheme.onBackground, fontWeight = FontWeight.Bold)
-                Text(text = "Publications", color = colorScheme.onBackground)
+                Text(
+                    text = publications.toString(),
+                    color = colorScheme.onBackground,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp
+                )
+                Text(text = "Publications", color = colorScheme.onBackground, fontSize = 12.sp)
             }
 
             Column(modifier = Modifier.clickable {  },
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = followers.toString(), color = colorScheme.onBackground, fontWeight = FontWeight.Bold)
-                Text(text = "Followers", color = colorScheme.onBackground)
+                Text(
+                    text = followers.toString(),
+                    color = colorScheme.onBackground,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp
+                )
+                Text(text = "Followers", color = colorScheme.onBackground, fontSize = 12.sp)
             }
 
             Column(modifier = Modifier.clickable {  },
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = following.toString(), color = colorScheme.onBackground, fontWeight = FontWeight.Bold)
-                Text(text = "Followings", color = colorScheme.onBackground)
+                Text(
+                    text = following.toString(),
+                    color = colorScheme.onBackground,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp
+                )
+                Text(text = "Following", color = colorScheme.onBackground, fontSize = 12.sp)
             }
         }
     }
@@ -176,8 +191,8 @@ fun ProfileInfo(name: String, description: String) {
             .background(colorScheme.background)
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
     ) {
-        Text(text = name, color = colorScheme.onBackground, fontWeight = FontWeight.Bold)
-        Text(text = description, color = colorScheme.onBackground)
+        Text(text = name, color = colorScheme.onBackground, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text(text = description, color = colorScheme.onBackground, fontSize = 13.sp)
     }
 }
 
