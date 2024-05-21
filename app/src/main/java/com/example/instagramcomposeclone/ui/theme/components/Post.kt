@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,7 +41,7 @@ val postPlaceholder: Post = Post(
     id = 1,
     username = "norman_osborn",
     userImage = R.drawable.norman_osborn,
-    postImage = R.drawable.norman_osborn_experiment,
+    postImages = mutableListOf(R.drawable.norman_osborn_experiment),
     postDescription = "Everything is prepared for this new experiment. I hope everything goes well.",
     postDate = "1. june, 2002.",
     firstLike = "osborn_jr",
@@ -57,15 +59,22 @@ fun Post(post: Post = postPlaceholder) {
 
         PostHeader(post.username, post.userImage)
 
+        if(post.postImages.size == 1)
+        {
+            Image(
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(id = post.postImages[0]),
+                contentDescription = null
+            )
+            PostOptions()
+        }
+        else{
+            val pagerState = rememberPagerState(initialPage = 0, pageCount = { post.postImages.size })
+            ImagePager(post.postImages, pagerState)
+            PostOptions(post.postImages.size, pagerState = pagerState)
+        }
 
-        Image(
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxWidth(),
-            painter = painterResource(id = post.postImage),
-            contentDescription = null
-        )
-
-        PostOptions()
         PostLikes(post.firstLike, post.likesNumber, post.firstImage, post.secondImage, post.thirdImage)
 
         PostDescriptionText(post.username, post.postDescription)
@@ -113,49 +122,61 @@ fun PostHeader(username: String, imageResource: Int) {
 }
 
 @Composable
-fun PostOptions() {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(top = 5.dp, bottom = 5.dp, start = 10.dp, end = 10.dp),
-        verticalAlignment = Alignment.CenterVertically) {
+fun PostOptions(imagesNumber: Int = 0, pagerState: PagerState? = null) {
 
-        Icon(modifier = Modifier
-            .size(28.dp)
-            .clickable {  },
-            painter = painterResource(id = R.drawable.heart),
-            contentDescription = "Options",
-            tint = MaterialTheme.colorScheme.onBackground
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Icon(modifier = Modifier
-            .size(28.dp)
-            .clickable {  },
-            painter = painterResource(id = R.drawable.comment),
-            contentDescription = "Options",
-            tint = MaterialTheme.colorScheme.onBackground
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Icon(modifier = Modifier
-            .size(28.dp)
-            .clickable {  },
-            painter = painterResource(id = R.drawable.paper_plane),
-            contentDescription = "Options",
-            tint = MaterialTheme.colorScheme.onBackground
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Icon(modifier = Modifier
-            .size(28.dp)
-            .clickable {  },
-            painter = painterResource(id = R.drawable.bookmark),
-            contentDescription = "Options",
-            tint = MaterialTheme.colorScheme.onBackground
-        )
+    Box {
+        if(imagesNumber!=0 && pagerState!=null){
+            PageIndicator(imagesNumber, pagerState)
+        }
 
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 5.dp, bottom = 5.dp, start = 10.dp, end = 10.dp),
+            verticalAlignment = Alignment.CenterVertically) {
+
+            Icon(modifier = Modifier
+                .size(28.dp)
+                .clickable { },
+                painter = painterResource(id = R.drawable.heart),
+                contentDescription = "Options",
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Icon(modifier = Modifier
+                .size(28.dp)
+                .clickable { },
+                painter = painterResource(id = R.drawable.comment),
+                contentDescription = "Options",
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Icon(modifier = Modifier
+                .size(28.dp)
+                .clickable { },
+                painter = painterResource(id = R.drawable.paper_plane),
+                contentDescription = "Options",
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(modifier = Modifier
+                .size(28.dp)
+                .clickable { },
+                painter = painterResource(id = R.drawable.bookmark),
+                contentDescription = "Options",
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+        }
     }
+
+
 }
 
 @Composable
 fun PostLikes(firstLike: String, likesNumber: Int, firstImage: Int, secondImage: Int, thirdImage: Int) {
+    val firstImagePainter = rememberAsyncImagePainter(model = firstImage)
+    val secondImagePainter = rememberAsyncImagePainter(model = secondImage)
+    val thirdImagePainter = rememberAsyncImagePainter(model = thirdImage)
+
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(top = 5.dp, bottom = 5.dp, start = 10.dp, end = 10.dp),
@@ -173,7 +194,7 @@ fun PostLikes(firstLike: String, likesNumber: Int, firstImage: Int, secondImage:
                     modifier = Modifier
                         .size(15.dp)
                         .clip(CircleShape),
-                    painter = painterResource(id = firstImage),
+                    painter = firstImagePainter,
                     contentDescription = null
                 )
             }
@@ -186,7 +207,7 @@ fun PostLikes(firstLike: String, likesNumber: Int, firstImage: Int, secondImage:
                     modifier = Modifier
                         .size(15.dp)
                         .clip(CircleShape),
-                    painter = painterResource(id = secondImage),
+                    painter = secondImagePainter,
                     contentDescription = null
                 )
             }
@@ -199,7 +220,7 @@ fun PostLikes(firstLike: String, likesNumber: Int, firstImage: Int, secondImage:
                     modifier = Modifier
                         .size(15.dp)
                         .clip(CircleShape),
-                    painter = painterResource(id = thirdImage),
+                    painter = thirdImagePainter,
                     contentDescription = null
                 )
             }
