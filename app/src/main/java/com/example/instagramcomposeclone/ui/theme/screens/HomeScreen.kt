@@ -5,8 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.*
@@ -94,40 +94,34 @@ fun HomeScreen() {
             }
         }
     }
+    val scrollState = rememberLazyListState()
 
-    Scaffold(
-        topBar = {
-            TopHomeNavigation(modifier = Modifier.offset(y = animatedTopBarOffset.dp))
-        }
-    ) { innerPadding ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(nestedScrollConnection)) {
-            LazyColumn(
-                state = remember { LazyListState() },
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .background(colorScheme.background)
-            ) {
-                item {
-                    StoriesRow(stories = stories)
-                }
-                items(rememberPosts, key = {it.id}) { post ->
-                    Post(post)
-                }
+    Box(modifier = Modifier.fillMaxSize().nestedScroll(nestedScrollConnection)) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(top = 56.dp),
+            state = scrollState
+        ) {
+            item {
+                StoriesRow(stories = stories)
+            }
+            items(rememberPosts, key = {it.id}) { post ->
+                Post(post)
+            }
             }
         }
+
+    TopHomeNavigation(modifier = Modifier.offset(y = animatedTopBarOffset.dp))
     }
-}
+
 
 @Composable
 fun TopHomeNavigation(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 10.dp, bottom = 10.dp, start = 5.dp, end = 5.dp)
-            .background(colorScheme.background),
+            .background(colorScheme.background)
+            .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 

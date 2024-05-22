@@ -42,26 +42,32 @@ fun StoryItem(
         Box(
             contentAlignment = Alignment.BottomEnd,
             modifier = Modifier
-                .size(70.dp)
+                .size(75.dp)
                 .clickable { }
         ) {
             val painter = rememberAsyncImagePainter(model = imageResId)
-            Image(
-                painter = painter,
-                modifier = Modifier
-                    .size(70.dp)
-                    .clip(CircleShape)
-                    .border(
-                        width = if (isYourStory) 0.dp else 3.dp,
-                        brush = if (isYourStory) Brush.linearGradient(
-                            listOf(Color.Gray, Color.Gray)
-                        ) else instagramGradient,
-                        shape = CircleShape
-                    )
-                    .background(colorScheme.secondary, shape = CircleShape),
-                contentScale = ContentScale.Crop,
-                contentDescription = "$userName's Story"
+
+            Box(modifier = Modifier
+                .border(
+                    width = if (isYourStory) 0.dp else 3.dp,
+                brush = if (isYourStory) Brush.linearGradient(
+                    listOf(Color.Transparent, Color.Transparent)
+                ) else instagramGradient,
+                shape = CircleShape
             )
+                .padding(6.dp)) {
+                Image(
+                    painter = painter,
+                    modifier = Modifier
+                        .size(75.dp)
+                        .clip(CircleShape)
+
+                        .background(colorScheme.secondary, shape = CircleShape),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "$userName's Story"
+                )
+            }
+
             if (isYourStory) {
                 Icon(
                     modifier = Modifier
