@@ -42,7 +42,7 @@ fun StoryItem(
         Box(
             contentAlignment = Alignment.BottomEnd,
             modifier = Modifier
-                .size(75.dp)
+                .size(80.dp)
                 .clickable { }
         ) {
             val painter = rememberAsyncImagePainter(model = imageResId)
@@ -59,7 +59,7 @@ fun StoryItem(
                 Image(
                     painter = painter,
                     modifier = Modifier
-                        .size(75.dp)
+                        .size(80.dp)
                         .clip(CircleShape)
 
                         .background(colorScheme.secondary, shape = CircleShape),

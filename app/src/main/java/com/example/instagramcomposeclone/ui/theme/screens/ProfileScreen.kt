@@ -1,6 +1,8 @@
 package com.example.instagramcomposeclone.ui.theme.screens
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -11,15 +13,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -41,61 +46,101 @@ import com.example.instagramcomposeclone.R
 import com.example.instagramcomposeclone.ui.theme.components.TopProfileNavigation
 import com.example.instagramcomposeclone.ui.theme.instagramBlue
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import com.example.instagramcomposeclone.model.User
+import com.example.instagramcomposeclone.ui.theme.components.ProfileDetails
 
 @Composable
-fun ProfileScreen(user: User, modifier: Modifier = Modifier) {
+fun ProfileScreen(user: User) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val imageResourceList = listOf(
-    R.drawable.nature_image,
-    R.drawable.spiderman_air,
-    R.drawable.bugle_photo,
-    R.drawable.photographing,
-    R.drawable.spiderman_drawing,
-    R.drawable.spiderman_crawling,
-    R.drawable.family_photo,
-    R.drawable.house,
-    R.drawable.spiderman_bridge
+        R.drawable.nature_image,
+        R.drawable.spiderman_air,
+        R.drawable.bugle_photo,
+        R.drawable.photographing,
+        R.drawable.spiderman_drawing,
+        R.drawable.spiderman_crawling,
+        R.drawable.family_photo,
+        R.drawable.house,
+        R.drawable.spiderman_bridge
     )
-    Scaffold(
-        topBar = { TopProfileNavigation(username = user.username) }
-    ) { innerPadding ->
-        Column(
-            modifier = modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .background(colorScheme.background)
-        ) {
-            CustomTabRow(
-                selectedTabIndex = selectedTab,
-                onTabSelected = { selectedTab = it },
-                modifier = Modifier.background(colorScheme.onBackground)
-            )
-            AnimatedContent(targetState = selectedTab,
-                transitionSpec =  {
-                    if(targetState > initialState) {
-                        (slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }) + fadeIn()).togetherWith(
-                            slideOutHorizontally(targetOffsetX = { fullWidth -> -fullWidth }) + fadeOut()
-                        )
-                    }
-                    else {
-                        (slideInHorizontally(initialOffsetX = { fullWidth -> -fullWidth }) + fadeIn()).togetherWith(
-                            slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
-                        )
-                    }
 
-                }, label = ""
-            ) { targetTab ->
-                when (targetTab) {
-                    0 -> PostsGrid(imageResourceList)
-                    1 -> ReelsGrid()
-                    2 -> TaggedGrid()
-                }
+    var topBarOffset by remember { mutableFloatStateOf(0f) }
+    val animatedTopBarOffset by animateFloatAsState(
+        targetValue = topBarOffset, label = ""
+    )
+
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val delta = available.y
+                val newOffset = topBarOffset + delta
+                topBarOffset = newOffset.coerceIn(-100f, 0f)
+                return Offset.Zero
             }
-
-
         }
     }
+    val scrollState = rememberLazyListState()
+
+    val configuration = LocalConfiguration.current
+    val postTabHeight = calculatePostTabHeight(configuration, imageResourceList.size)
+
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .nestedScroll(nestedScrollConnection)) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(top = 56.dp),
+            state = scrollState
+        ) {
+
+            item { ProfileDetails(publications = imageResourceList.size) }
+
+            item {
+                CustomTabRow(
+                    selectedTabIndex = selectedTab,
+                    onTabSelected = { selectedTab = it },
+                    modifier = Modifier.background(colorScheme.onBackground)
+                )
+            }
+            item {
+                AnimatedContent(
+                    targetState = selectedTab,
+                    transitionSpec = {
+                        if (targetState > initialState) {
+                            (slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }) + fadeIn()).togetherWith(
+                                slideOutHorizontally(targetOffsetX = { fullWidth -> -fullWidth }) + fadeOut()
+                            )
+                        } else {
+                            (slideInHorizontally(initialOffsetX = { fullWidth -> -fullWidth }) + fadeIn()).togetherWith(
+                                slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }) + fadeOut()
+                            )
+                        }
+                    }, label = ""
+                ) { targetTab ->
+                    when (targetTab) {
+                        0 -> Box(modifier = Modifier.height(postTabHeight.dp)) { PostsGrid(imageResourceList) }
+                        1 -> Box(modifier = Modifier.height(500.dp)) { ReelsGrid() }
+                        2 -> Box(modifier = Modifier.height(500.dp)) { TaggedGrid() }
+                    }
+                }
+            }
+        }
+    }
+
+    TopProfileNavigation(modifier = Modifier.offset(y = animatedTopBarOffset.dp), username = user.username)
+}
+
+fun calculatePostTabHeight(configuration: Configuration, imageResourceListSize: Int): Int{
+    val screenWidth = configuration.screenWidthDp
+    val postImageWidth = screenWidth/3
+    return (imageResourceListSize/3 * postImageWidth)
+
 }
 
 @Composable
@@ -147,7 +192,7 @@ fun PostsGrid(imageResourceList: List<Int>) {
                 modifier = Modifier
                     .padding(1.dp)
                     .aspectRatio(1f)
-                    .clickable {  },
+                    .clickable { },
                 contentScale = ContentScale.Crop)
         }
     }
@@ -195,7 +240,7 @@ fun TaggedGrid() {
                 modifier = Modifier
                     .padding(1.dp)
                     .aspectRatio(1f)
-                    .clickable {  },
+                    .clickable { },
                 contentScale = ContentScale.Crop)
         }
     }
