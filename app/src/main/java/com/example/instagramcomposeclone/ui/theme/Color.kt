@@ -8,6 +8,8 @@ val instagramRed = Color(0xFFFD0635)
 val instagramDarkGray = Color(0xFF262626)
 val instagramLightGray = Color(0xFFEFEFEF)
 val instagramBlue = Color(0xFF0094F5)
+val hashtagLight = Color(0xFFBAEBFF)
+val hashtagDark = Color(0xFF395375)
 val instagramGradient = Brush.linearGradient(
     colors = listOf(
         Color(0xFF962FBF),

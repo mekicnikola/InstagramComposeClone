@@ -20,12 +20,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.instagramcomposeclone.R
 import com.example.instagramcomposeclone.model.Post
+import com.example.instagramcomposeclone.model.scientistEmoji
+import com.example.instagramcomposeclone.model.sunEmoji
+import com.example.instagramcomposeclone.model.tubeEmoji
 import com.example.instagramcomposeclone.ui.theme.components.Post
 import com.example.instagramcomposeclone.ui.theme.components.StoriesRow
 import com.example.instagramcomposeclone.ui.theme.components.Story
 
 @Composable
 fun HomeScreen() {
+
+
 
     val stories: List<Story> = listOf(
         Story(id = 1, imageResId = R.drawable.profile_photo, userName = "Your story", isYourStory = true),
@@ -42,20 +47,21 @@ fun HomeScreen() {
             username = "norman_osborn",
             userImage = R.drawable.norman_osborn,
             postImages = mutableListOf(R.drawable.norman_osborn_experiment, R.drawable.norman_osborn_experiment_second, R.drawable.norman_osborn_experiment_third),
-            postDescription = "Everything is prepared for this new experiment. I hope everything goes well.",
+            postDescription = "Everything is prepared for this new experiment. I hope everything goes well. #scientist #experiment $scientistEmoji $tubeEmoji",
             postDate = "1. june, 2002.",
             firstLike = "osborn_jr",
             likesNumber = 535,
             firstImage = R.drawable.harry_osborn,
             secondImage = R.drawable.otto_octavius,
-            thirdImage = R.drawable.jonah_jameson
+            thirdImage = R.drawable.jonah_jameson,
+            location = "Oscorp"
         ),
         Post(
             id = 2,
             username = "otto_octavius",
             userImage = R.drawable.otto_octavius,
             postImages = mutableListOf(R.drawable.otto_octavius_experiment),
-            postDescription = "Everything is prepared for my new experiment. I hope everything goes well.",
+            postDescription = "Everything is prepared for my new experiment. I hope everything goes well.$sunEmoji #arteficialsun",
             postDate = "26. january, 2004.",
             firstLike = "jameson123",
             likesNumber = 77,
@@ -68,7 +74,7 @@ fun HomeScreen() {
             username = "jameson123",
             userImage = R.drawable.jonah_jameson,
             postImages = mutableListOf(R.drawable.jonah_jameson_papers, R.drawable.jonah_jameson_papers_second),
-            postDescription = "THIEF!",
+            postDescription = "THIEF! #dailybugle #spiderman",
             postDate = "14. may, 2007.",
             firstLike = "jameson123",
             likesNumber = 12,

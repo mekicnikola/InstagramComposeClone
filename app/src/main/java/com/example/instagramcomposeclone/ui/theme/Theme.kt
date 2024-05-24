@@ -22,7 +22,7 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = Color.Black,
     onTertiary = Color.Black,
     onBackground = Color.White,
-    onSurface = Color.White
+    onSurface = Color.White,
 )
 
 private val LightColorScheme = lightColorScheme(

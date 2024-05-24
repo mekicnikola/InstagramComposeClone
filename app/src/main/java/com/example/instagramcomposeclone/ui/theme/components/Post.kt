@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,8 @@ import androidx.compose.ui.zIndex
 import coil.compose.rememberAsyncImagePainter
 import com.example.instagramcomposeclone.R
 import com.example.instagramcomposeclone.model.Post
+import com.example.instagramcomposeclone.ui.theme.hashtagDark
+import com.example.instagramcomposeclone.ui.theme.hashtagLight
 
 val postPlaceholder: Post = Post(
     id = 1,
@@ -48,7 +51,8 @@ val postPlaceholder: Post = Post(
     likesNumber = 535,
     firstImage = R.drawable.harry_osborn,
     secondImage = R.drawable.otto_octavius,
-    thirdImage = R.drawable.jonah_jameson)
+    thirdImage = R.drawable.jonah_jameson,
+    location = "Oscorp")
 @Preview
 @Composable
 fun Post(post: Post = postPlaceholder) {
@@ -57,7 +61,7 @@ fun Post(post: Post = postPlaceholder) {
         .padding(bottom = 5.dp)
         .background(MaterialTheme.colorScheme.background)) {
 
-        PostHeader(post.username, post.userImage)
+        PostHeader(post.username, post.userImage, post.location)
 
         if(post.postImages.size == 1)
         {
@@ -91,7 +95,7 @@ fun Post(post: Post = postPlaceholder) {
 }
 
 @Composable
-fun PostHeader(username: String, imageResource: Int) {
+fun PostHeader(username: String, imageResource: Int, location: String?) {
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(top = 5.dp, bottom = 5.dp, start = 10.dp, end = 10.dp),
@@ -104,12 +108,22 @@ fun PostHeader(username: String, imageResource: Int) {
             contentDescription = null,
             contentScale = ContentScale.Crop)
         Spacer(modifier = Modifier.width(5.dp))
-        Text(
-            text = username,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 13.sp,
-            fontWeight = FontWeight.SemiBold
-        )
+        Column {
+            Text(
+                text = username,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+            if(location!=null)
+            {
+                Text(
+                    text = location,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 10.sp,
+                )
+            }
+        }
         Spacer(modifier = Modifier.weight(1f))
         Icon(modifier = Modifier
             .size(24.dp),
@@ -254,6 +268,8 @@ fun PostLikesText(firstLike: String, likesNumber: Int) {
 
 @Composable
 fun PostDescriptionText(username: String, description: String) {
+    var hashtagColor = hashtagDark
+    if(isSystemInDarkTheme()) hashtagColor = hashtagLight
     Text(
         buildAnnotatedString {
             withStyle(style = SpanStyle(
@@ -263,13 +279,24 @@ fun PostDescriptionText(username: String, description: String) {
             ) {
                 append("$username ")
             }
-            withStyle(style = SpanStyle(
-                fontSize = 13.sp,
-                color = MaterialTheme.colorScheme.onBackground)
-            ) {
-                append("$description ")
+            val words = description.split(" ")
+            words.forEach { word ->
+                if (word.startsWith("#")) {
+                    withStyle(style = SpanStyle(
+                        fontSize = 13.sp,
+                        color = hashtagColor)
+                    ) {
+                        append("$word ")
+                    }
+                } else {
+                    withStyle(style = SpanStyle(
+                        fontSize = 13.sp,
+                        color = MaterialTheme.colorScheme.onBackground)
+                    ) {
+                        append("$word ")
+                    }
+                }
             }
-
         },
         lineHeight = 15.sp,
         modifier = Modifier
@@ -277,3 +304,4 @@ fun PostDescriptionText(username: String, description: String) {
             .padding(bottom = 5.dp, start = 10.dp, end = 10.dp)
     )
 }
+
